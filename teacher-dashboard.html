@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель учителя - Brainik</title>
+    <link rel="stylesheet" href="css/botchat.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/botchat.js" defer></script>
+     <script src="js/i18n.js" defer></script>
+     <script src="js/teacherdashboard.js" defer></script>
+ 
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="logo">🧠 Brainik</a>
+            <span class="teacher-badge">👨‍🏫 Учитель</span>
+            <button class="logout-btn" onclick="logout()">Выйти</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Панель учителя</h1>
+            <p>Управление классом и отслеживание прогресса учеников</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>24</h3>
+                <p>Учеников в классе</p>
+            </div>
+            <div class="stat-card">
+                <h3>156</h3>
+                <p>Выполненных заданий</p>
+            </div>
+            <div class="stat-card">
+                <h3>78%</h3>
+                <p>Средний прогресс</p>
+            </div>
+            <div class="stat-card">
+                <h3>12</h3>
+                <p>Активных заданий</p>
+            </div>
+        </div>
+
+        <div class="two-columns">
+            <div class="panel">
+                <h2>👥 Мои ученики</h2>
+                <div class="student-row">
+                    <div class="student-info">
+                        <div class="student-avatar">👧</div>
+                        <div>
+                            <div class="student-name">Ани Петросян</div>
+                            <div class="student-progress">Age 8 • Уровень 5</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <div class="action-btns">
+                        <button class="btn-small btn-secondary">Отчёт</button>
+                        <button class="btn-small btn-primary">Задание</button>
+                    </div>
+                </div>
+                <div class="student-row">
+                    <div class="student-info">
+                        <div class="student-avatar">👦</div>
+                        <div>
+                            <div class="student-name">Гагик Саргсян</div>
+                            <div class="student-progress">Age 9 • Уровень 4</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 72%"></div>
+                    </div>
+                    <div class="action-btns">
+                        <button class="btn-small btn-secondary">Отчёт</button>
+                        <button class="btn-small btn-primary">Задание</button>
+                    </div>
+                </div>
+                <div class="student-row">
+                    <div class="student-info">
+                        <div class="student-avatar">👧</div>
+                        <div>
+                            <div class="student-name">Мария Аванесян</div>
+                            <div class="student-progress">Age 7 • Уровень 3</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <div class="action-btns">
+                        <button class="btn-small btn-secondary">Отчёт</button>
+                        <button class="btn-small btn-primary">Задание</button>
+                    </div>
+                </div>
+                <div class="student-row">
+                    <div class="student-info">
+                        <div class="student-avatar">👦</div>
+                        <div>
+                            <div class="student-name">Артем Даниелян</div>
+                            <div class="student-progress">Age 8 • Уровень 5</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90%"></div>
+                    </div>
+                    <div class="action-btns">
+                        <button class="btn-small btn-secondary">Отчёт</button>
+                        <button class="btn-small btn-primary">Задание</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>📝 Назначить задание</h2>
+                <form class="assignment-form">
+                    <div class="form-group">
+                        <label>Ученик</label>
+                        <select>
+                            <option>Всем классом</option>
+                            <option>Ани Петросян</option>
+                            <option>Гагик Саргсян</option>
+                            <option>Мария Аванесян</option>
+                            <option>Артем Даниелян</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Тема</label>
+                        <select>
+                            <option>Математика</option>
+                            <option>Логика</option>
+                            <option>История Армении</option>
+                            <option>Язык</option>
+                            <option>Программирование</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Название задания</label>
+                        <input type="text" placeholder="Например: Счёт до 100">
+                    </div>
+                    <div class="form-group">
+                        <label>Описание</label>
+                        <textarea placeholder="Описание задания..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Срок выполнения</label>
+                        <input type="date">
+                    </div>
+                    <button type="button" class="btn-full">Назначить задание</button>
+                </form>
+            </div>
+        </div>
+
+        <button class="online-class-btn">
+            <span class="online-status"></span>
+            🎥 Начать онлайн-урок
+        </button>
+    </main>
+ 
+    <!-- Bot Chat Button -->
+    <button type="button" class="bot-fab" id="botFab" aria-label="Bot">🤖</button>
+
+    <!-- Bot Chat Modal -->
+    <div id="botChatModal" class="hidden fixed inset-0 z-[3000]">
+        <div id="botChatBackdrop" class="absolute inset-0 bg-black/60"></div>
+        <div class="relative w-full h-full tail-container">
+            <div class="flex flex-col h-screen">
+                <header class="header-gradient px-6 py-5 flex items-center justify-between border-b border-zinc-800 shadow-2xl">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-4xl shadow-xl animate-pulse">🤖</div>
+                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-zinc-950 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold tracking-tighter text-yellow-300">AI Поддержка</h1>
+                            <p class="text-xs text-green-400 flex items-center gap-1">
+                                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                онлайн • отвечает мгновенно
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="clearChat()" class="flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 transition-all rounded-2xl text-sm font-medium">
+                            <span class="text-lg">🗑️</span>Очистить чат
+                        </button>
+                        <button type="button" id="botChatClose" class="w-11 h-11 flex items-center justify-center text-2xl bg-zinc-900 hover:bg-zinc-800 rounded-2xl border border-zinc-800">✕</button>
+                        <div class="text-xs px-4 py-2 bg-zinc-900 rounded-3xl border border-yellow-400/30 text-yellow-300 font-medium">v1.0</div>
+                    </div>
+                </header>
+                <div id="chat" class="chat-container flex-1 overflow-y-auto p-8 space-y-8 bg-[radial-gradient(at_bottom_right,#18181b_0%,transparent_70%)] relative"></div>
+                <div class="bg-zinc-900 border-t border-zinc-700 p-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div id="attachments-preview" class="flex gap-3 mb-3 flex-wrap"></div>
+                        <div class="flex items-center gap-3 bg-zinc-800 rounded-3xl px-3 py-2 shadow-2xl border border-zinc-700">
+                            <button type="button" onclick="triggerFileInput()" class="w-11 h-11 flex items-center justify-center text-3xl hover:bg-zinc-700 transition-all rounded-2xl active:scale-90">📎</button>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*,audio/*,application/pdf,.doc,.docx,.txt" class="hidden">
+                            <input id="message-input" type="text" placeholder="Напишите сообщение..." class="flex-1 bg-transparent outline-none text-lg placeholder-zinc-500 py-4 px-4 font-medium" onkeydown="if(event.key === 'Enter') sendTextMessage()">
+                            <button type="button" onclick="sendTextMessage()" class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl shadow-xl active:scale-95 transition-all">➤</button>
+                        </div>
+                        <p class="text-center text-[10px] text-zinc-500 mt-4 tracking-widest">Поддерживает: фото • музыка • видео • PDF • любые файлы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

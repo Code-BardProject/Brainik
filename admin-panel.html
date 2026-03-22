@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Brainik</title>
+    <script src="js/i18n.js" defer></script>
+    <script src="js/adminpanel.js" defer></script>
+    <link rel="stylesheet" href="css/adminpanel.css">
+</head>
+<body>
+
+<script>
+    // Проверка авторизации
+    (function() {
+        const currentAdmin = JSON.parse(localStorage.getItem('currentAdmin'));
+        
+        if (!currentAdmin) {
+            // Если не авторизован, перенаправляем на страницу входа
+            window.location.href = 'admin-login.html';
+            return;
+        }
+        
+        // Проверка времени сессии (24 часа)
+        const loginTime = new Date(currentAdmin.loginTime);
+        const now = new Date();
+        const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
+        
+        if (hoursDiff > 24) {
+            // Сессия истекла
+            localStorage.removeItem('currentAdmin');
+            window.location.href = 'admin-login.html';
+            return;
+        }
+        
+        // Обновляем время сессии
+        currentAdmin.loginTime = new Date().toISOString();
+        localStorage.setItem('currentAdmin', JSON.stringify(currentAdmin));
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Мобильная кнопка меню -->
+    <button class="mobile-toggle-btn" id="mobileToggleBtn" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px;">
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+        </svg>
+    </button>
+
+    <!-- Оверлей для мобильного меню -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <!-- Кнопка закрытия -->
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Закрыть меню">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+        </button>
+        
+        <div class="logo">
+            <div class="logo-icon">
+                <span style="font-size: 24px;">🧠</span>
+                <h1>Brainik</h1>
+            </div>
+            <div class="logo-text">
+                <div class="admin-info">
+                    <div class="admin-avatar">👤</div>
+                    <div class="admin-details">
+                        <p class="admin-name" id="adminName">Администратор</p>
+                        <p class="admin-role" id="adminRole">Супер админ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="#" class="nav-item active" data-section="dashboard" onclick="showSection('dashboard', event)">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Дашборд</span>
+            </a>
+            <a href="#" class="nav-item" data-section="games" onclick="showSection('games', event)">
+                <span class="nav-icon">🧩</span>
+                <span class="nav-text">Игры</span>
+            </a>
+            <a href="#" class="nav-item" data-section="hero-cards" onclick="showSection('hero-cards', event)">
+                <span class="nav-icon">🎴</span>
+                <span class="nav-text">Hero Cards</span>
+            </a>
+            <a href="#" class="nav-item" data-section="users" onclick="showSection('users', event)">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Пользователи</span>
+            </a>
+            <a href="#" class="nav-item" data-section="subscriptions" onclick="showSection('subscriptions', event)">
+                <span class="nav-icon">💰</span>
+                <span class="nav-text">Подписки</span>
+            </a>
+            <a href="#" class="nav-item" data-section="notifications" onclick="showSection('notifications', event)">
+                <span class="nav-icon">🔔</span>
+                <span class="nav-text">Уведомления</span>
+                <span class="nav-badge" id="notifCount">0</span>
+            </a>
+            <a href="#" class="nav-item" data-section="settings" onclick="showSection('settings', event)">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Настройки</span>
+            </a>
+        <button class="logout-btn" onclick="logout()">
+                <span>🚪</span>
+                <span>Выйти</span>
+            </button>
+        </nav>
+    </aside>
+
+    <main class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1 id="pageTitle">📊 Дашборд</h1>
+                <p class="breadcrumb">Главная / <span id="breadcrumbText">Дашборд</span></p>
+            </div>
+            <div class="header-right">
+                <div class="header-actions">
+                    <button class="header-btn" onclick="refreshData()" title="Обновить данные">
+                        <span>🔄</span>
+                    </button>
+                    <button class="header-btn" onclick="showNotifications()" title="Уведомления">
+                        <span>🔔</span>
+                        <span class="header-badge" id="headerNotifCount">0</span>
+                    </button>
+                </div>
+             
+            </div>
+        </div>
+
+        <!-- DASHBOARD SECTION -->
+        <section id="dashboard" class="content-section active">
+            <div class="stats-grid">
+                <div class="stat-card animated-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">👥</div>
+                    <div class="stat-info">
+                        <h3 id="totalUsers">1,247</h3>
+                        <p>Всего пользователей</p>
+                        <span class="stat-trend up">+12% ↗</span>
+                    </div>
+                </div>
+                <div class="stat-card animated-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #10ac84, #1dd1a1);">🟢</div>
+                    <div class="stat-info">
+                        <h3 id="activeUsers">856</h3>
+                        <p>Активных сегодня</p>
+                        <span class="stat-trend up">+5% ↗</span>
+                    </div>
+                </div>
+                <div class="stat-card animated-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f39c12, #f1c40f);">💎</div>
+                    <div class="stat-info">
+                        <h3 id="premiumUsers">342</h3>
+                        <p>Премиум подписчиков</p>
+                        <span class="stat-trend up">+8% ↗</span>
+                    </div>
+                </div>
+                <div class="stat-card animated-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #e74c3c, #ff6b6b);">📈</div>
+                    <div class="stat-info">
+                        <h3 id="newUsers">128</h3>
+                        <p>Новых за неделю</p>
+                        <span class="stat-trend up">+15% ↗</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="panel chart-panel">
+                    <div class="panel-header">
+                        <h2>📈 Статистика регистраций</h2>
+                        <select class="panel-select">
+                            <option>Последние 7 дней</option>
+                            <option>Последние 30 дней</option>
+                            <option>Этот год</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-bar" style="height: 40%;" data-value="120"><span>Пн</span></div>
+                        <div class="chart-bar" style="height: 65%;" data-value="195"><span>Вт</span></div>
+                        <div class="chart-bar" style="height: 85%;" data-value="255"><span>Ср</span></div>
+                        <div class="chart-bar" style="height: 55%;" data-value="165"><span>Чт</span></div>
+                        <div class="chart-bar" style="height: 95%;" data-value="285"><span>Пт</span></div>
+                        <div class="chart-bar" style="height: 70%;" data-value="210"><span>Сб</span></div>
+                        <div class="chart-bar" style="height: 50%;" data-value="150"><span>Вс</span></div>
+                    </div>
+                </div>
+
+                <div class="panel recent-panel">
+                    <div class="panel-header">
+                        <h2>🕐 Последние действия</h2>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <span class="activity-icon" style="background: #dbeafe;">👤</span>
+                            <div class="activity-info">
+                                <p>Новый пользователь <strong>Мария И.</strong></p>
+                                <small>2 минуты назад</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon" style="background: #dcfce7;">💎</span>
+                            <div class="activity-info">
+                                <p>Премиум подписка <strong>Артем К.</strong></p>
+                                <small>15 минут назад</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon" style="background: #ffedd5;">🎴</span>
+                            <div class="activity-info">
+                                <p>Получена карта <strong>Тигран Великий</strong></p>
+                                <small>32 минуты назад</small>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon" style="background: #f3e8ff;">🧩</span>
+                            <div class="activity-info">
+                                <p>Пройдена игра <strong>Цвета и формы</strong></p>
+                                <small>1 час назад</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="two-columns">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>🧩 Управление пазлами</h2>
+                        <button class="btn-primary" onclick="openModal('addPuzzle')">+ Добавить</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Возраст</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Считаем до 10</td>
+                                    <td><span class="age-tag">Age 4-6</span></td>
+                                    <td><span class="status-badge active">Активен</span></td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">✏️</button>
+                                        <button class="btn-icon" title="Delete">🗑️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>История: Тигран</td>
+                                    <td><span class="age-tag">Age 7+</span></td>
+                                    <td><span class="status-badge active">Активен</span></td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">✏️</button>
+                                        <button class="btn-icon" title="Delete">🗑️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Логика: Пазл</td>
+                                    <td><span class="age-tag">Age 2-3</span></td>
+                                    <td><span class="status-badge draft">Черновик</span></td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">✏️</button>
+                                        <button class="btn-icon" title="Delete">🗑️</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>🎴 Hero Cards fghdf</h2>
+                        <button class="btn-primary" onclick="openModal('addHero')">+ Добавить</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Герой</th>
+                                    <th>Редкость</th>
+                                    <th>Получено</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Тигран Великий</strong></td>
+                                    <td><span class="rarity-badge legendary">Легендарная</span></td>
+                                    <td>245</td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">✏️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Вардан Мамиконян</strong></td>
+                                    <td><span class="rarity-badge epic">Эпическая</span></td>
+                                    <td>189</td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">✏️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Месроп Маштоц</strong></td>
+                                    <td><span class="rarity-badge epic">Эпическая</span></td>
+                                    <td>156</td>
+                                    <td>
+                                        <button class="btn-icon" title="Edit">✏️</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAMES SECTION -->
+        <section id="games" class="content-section">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>🎮 Управление играми</h2>
+                    <div class="panel-actions">
+                        <input type="text" class="search-input" placeholder="🔍 Поиск игр..." id="gameSearch">
+                        <button class="btn-primary" onclick="openModal('addGame')">+ Добавить игру</button>
+                    </div>
+                </div>
+                <div class="games-grid-admin">
+                    <div class="game-card-admin">
+                        <div class="game-preview">🎨</div>
+                        <div class="game-info">
+                            <h3>Цвета и формы</h3>
+                            <p>Возраст: 2-3 года</p>
+                            <div class="game-stats">
+                                <span>👁️ 1,234 просмотра</span>
+                                <span>✅ 856 прохождений</span>
+                            </div>
+                        </div>
+                        <div class="game-actions">
+                            <span class="status-badge active">Активна</span>
+                            <button class="btn-icon">✏️</button>
+                            <button class="btn-icon">📊</button>
+                        </div>
+                    </div>
+                    <div class="game-card-admin">
+                        <div class="game-preview">🔢</div>
+                        <div class="game-info">
+                            <h3>Счет и математика</h3>
+                            <p>Возраст: 4-6 лет</p>
+                            <div class="game-stats">
+                                <span>👁️ 2,456 просмотров</span>
+                                <span>✅ 1,234 прохождения</span>
+                            </div>
+                        </div>
+                        <div class="game-actions">
+                            <span class="status-badge active">Активна</span>
+                            <button class="btn-icon">✏️</button>
+                            <button class="btn-icon">📊</button>
+                        </div>
+                    </div>
+                    <div class="game-card-admin">
+                        <div class="game-preview">🔤</div>
+                        <div class="game-info">
+                            <h3>Алфавит</h3>
+                            <p>Возраст: 4-6 лет</p>
+                            <div class="game-stats">
+                                <span>👁️ 1,876 просмотров</span>
+                                <span>✅ 987 прохождений</span>
+                            </div>
+                        </div>
+                        <div class="game-actions">
+                            <span class="status-badge draft">Черновик</span>
+                            <button class="btn-icon">✏️</button>
+                            <button class="btn-icon">📊</button>
+                        </div>
+                    </div>
+                    <div class="game-card-admin">
+                        <div class="game-preview">🧩</div>
+                        <div class="game-info">
+                            <h3>Пазлы</h3>
+                            <p>Возраст: 7-9 лет</p>
+                            <div class="game-stats">
+                                <span>👁️ 3,210 просмотров</span>
+                                <span>✅ 2,145 прохождений</span>
+                            </div>
+                        </div>
+                        <div class="game-actions">
+                            <span class="status-badge active">Активна</span>
+                            <button class="btn-icon">✏️</button>
+                            <button class="btn-icon">📊</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HERO CARDS SECTION -->
+        <section id="hero-cards" class="content-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>12</h3>
+                    <p>Всего карт</p>
+                </div>
+                <div class="stat-card">
+                    <h3>3</h3>
+                    <p>Легендарных</p>
+                </div>
+                <div class="stat-card">
+                    <h3>4</h3>
+                    <p>Эпических</p>
+                </div>
+                <div class="stat-card">
+                    <h3>245</h3>
+                    <p>Карт получено</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>🎴 Коллекция Hero Cards</h2>
+                    <button class="btn-primary" onclick="openModal('addHero')">+ Добавить героя</button>
+                </div>
+                <div class="hero-grid-admin">
+                    <div class="hero-card-admin legendary">
+                        <div class="hero-image">👑</div>
+                        <div class="hero-details">
+                            <h3>Тигран Великий</h3>
+                            <span class="rarity-badge legendary">Легендарная</span>
+                            <p>Царь царей, правивший Арменией в золотой век.</p>
+                            <div class="hero-stats">
+                                <span>🏆 Получено: 245</span>
+                            </div>
+                        </div>
+                        <div class="hero-actions">
+                            <button class="btn-icon">✏️</button>
+                            <button class="btn-icon">  </button>
+                        </div>
+                    </div>
+                    <div class="hero-card-admin epic">
+                        <div class="hero-image">⚔️</div>
+                        <div class="hero-details">
+                            <h3>Вардан Мамиконян</h3>
+                            <span class="rarity-badge epic">Эпическая</span>
+                            <p>Герой Аварайской битвы, защитник веры.</p>
+                            <div class="hero-stats">
+                                <span>🏆 Получено: 189</span>
+                            </div>
+                        </div>
+                        <div class="hero-actions">
+                            <button class="btn-icon">✏️</button>
+                            <button class="btn-icon">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="hero-card-admin epic">
+                        <div class="hero-image">✍️</div>
+                        <div class="hero-details">
+                            <h3>Месроп Маштоц</h3>
+                            <span class="rarity-badge epic">Эпическая</span>
+                            <p>Создатель армянского алфавита.</p>
+                            <div class="hero-stats">
+                                <span>🏆 Получено: 156</span>
+                            </div>
+                        </div>
+                        <div class="hero-actions">
+                            <button class="btn-icon">✏️</button>
+                            <button class="btn-icon">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="hero-card-admin rare locked">
+                        <div class="hero-image">🏰</div>
+                        <div class="hero-details">
+                            <h3>Григор Нарекаци</h3>
+                            <span class="rarity-badge rare">Редкая</span>
+                            <p>Великий поэт и мистик XI века.</p>
+                            <div class="hero-stats">
+                                <span>🔒 Заблокирована</span>
+                            </div>
+                        </div>
+                        <div class="hero-actions">
+                            <button class="btn-icon">✏️</button>
+                            <button class="btn-icon">🔓</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- USERS SECTION -->
+        <section id="users" class="content-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>1,247</h3>
+                    <p>Всего</p>
+                </div>
+                <div class="stat-card">
+                    <h3>856</h3>
+                    <p>Активных</p>
+                </div>
+                <div class="stat-card">
+                    <h3>342</h3>
+                    <p>Премиум</p>
+                </div>
+                <div class="stat-card">
+                    <h3>45</h3>
+                    <p>Новых сегодня</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>👥 Управление пользователями</h2>
+                    <div class="panel-actions">
+                        <select class="panel-select" id="userFilter">
+                            <option>Все пользователи</option>
+                            <option>Активные</option>
+                            <option>Премиум</option>
+                            <option>Бесплатные</option>
+                            <option>Заблокированные</option>
+                        </select>
+                        <input type="text" class="search-input" placeholder="🔍 Поиск пользователя...">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Пользователь</th>
+                                <th>Email</th>
+                                <th>Статус</th>
+                                <th>Подписка</th>
+                                <th>Регистрация</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="user-cell">
+                                        <span class="user-avatar-small">👧</span>
+                                        <div>
+                                            <strong>Мария Иванова</strong>
+                                            <small>@maria_i</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>maria@example.com</td>
+                                <td><span class="status-badge active">Активен</span></td>
+                                <td><span class="plan-badge premium">💎 Премиум</span></td>
+                                <td>15.03.2026</td>
+                                <td>
+                                    <button class="btn-icon" title="View">👁️</button>
+                                    <button class="btn-icon" title="Edit">✏️</button>
+                                    <button class="btn-icon" title="Block">🚫</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="user-cell">
+                                        <span class="user-avatar-small">👦</span>
+                                        <div>
+                                            <strong>Артем Козлов</strong>
+                                            <small>@artem_k</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>artem@example.com</td>
+                                <td><span class="status-badge active">Активен</span></td>
+                                <td><span class="plan-badge free">🆓 Бесплатный</span></td>
+                                <td>14.03.2026</td>
+                                <td>
+                                    <button class="btn-icon" title="View">👁️</button>
+                                    <button class="btn-icon" title="Edit">✏️</button>
+                                    <button class="btn-icon" title="Block">🚫</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="user-cell">
+                                        <span class="user-avatar-small">👧</span>
+                                        <div>
+                                            <strong>Ани Петросян</strong>
+                                            <small>@ani_p</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>ani@example.com</td>
+                                <td><span class="status-badge inactive">Неактивен</span></td>
+                                <td><span class="plan-badge premium">💎 Премиум</span></td>
+                                <td>10.03.2026</td>
+                                <td>
+                                    <button class="btn-icon" title="View">👁️</button>
+                                    <button class="btn-icon" title="Edit">✏️</button>
+                                    <button class="btn-icon" title="Unblock">✅</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button class="btn-secondary">← Предыдущая</button>
+                    <span class="page-info">Страница 1 из 42</span>
+                    <button class="btn-secondary">Следующая →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUBSCRIPTIONS SECTION -->
+        <section id="subscriptions" class="content-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>₽125,450</h3>
+                    <p>Доход за месяц</p>
+                    <span class="stat-trend up">+18% ↗</span>
+                </div>
+                <div class="stat-card">
+                    <h3>342</h3>
+                    <p>Премиум пользователей</p>
+                    <span class="stat-trend up">+12% ↗</span>
+                </div>
+                <div class="stat-card">
+                    <h3>85</h3>
+                    <p>Новых подписок</p>
+                    <span class="stat-trend up">+24% ↗</span>
+                </div>
+                <div class="stat-card">
+                    <h3>12</h3>
+                    <p>Отмен за месяц</p>
+                    <span class="stat-trend down">-5% ↘</span>
+                </div>
+            </div>
+
+            <div class="two-columns">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>💰 Планы подписок</h2>
+                        <button class="btn-primary" onclick="openModal('addPlan')">+ Добавить план</button>
+                    </div>
+                    <div class="plans-grid">
+                        <div class="plan-card">
+                            <div class="plan-header" style="background: linear-gradient(135deg, #f0f0f0, #e0e0e0);">
+                                <h3>🆓 Бесплатный</h3>
+                                <p class="plan-price">₽0<span>/мес</span></p>
+                            </div>
+                            <ul class="plan-features">
+                                <li>✅ Базовые игры</li>
+                                <li>✅ 3 уровня сложности</li>
+                                <li>❌ Hero Cards</li>
+                                <li>❌ Расширенная статистика</li>
+                            </ul>
+                            <div class="plan-stats">
+                                <span>👤 905 пользователей</span>
+                            </div>
+                        </div>
+                        <div class="plan-card popular">
+                            <div class="plan-badge-popular">ПОПУЛЯРНЫЙ</div>
+                            <div class="plan-header" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                                <h3>💎 Премиум</h3>
+                                <p class="plan-price">₽299<span>/мес</span></p>
+                            </div>
+                            <ul class="plan-features">
+                                <li>✅ Все игры</li>
+                                <li>✅ Все уровни сложности</li>
+                                <li>✅ Hero Cards</li>
+                                <li>✅ Расширенная статистика</li>
+                            </ul>
+                            <div class="plan-stats">
+                                <span>👤 342 пользователя</span>
+                            </div>
+                        </div>
+                        <div class="plan-card">
+                            <div class="plan-header" style="background: linear-gradient(135deg, #f39c12, #f1c40f);">
+                                <h3>🏆 Семейный</h3>
+                                <p class="plan-price">₽599<span>/мес</span></p>
+                            </div>
+                            <ul class="plan-features">
+                                <li>✅ Все из Премиум</li>
+                                <li>✅ До 4 детей</li>
+                                <li>✅ Родительский контроль</li>
+                                <li>✅ Совместные задания</li>
+                            </ul>
+                            <div class="plan-stats">
+                                <span>👤 48 семей</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>📊 История платежей</h2>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Пользователь</th>
+                                    <th>План</th>
+                                    <th>Сумма</th>
+                                    <th>Дата</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Мария Иванова</td>
+                                    <td><span class="plan-badge premium">💎 Премиум</span></td>
+                                    <td>₽299</td>
+                                    <td>15.03.2026</td>
+                                    <td><span class="status-badge active">✅ Успешно</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Артем Козлов</td>
+                                    <td><span class="plan-badge family">🏆 Семейный</span></td>
+                                    <td>₽599</td>
+                                    <td>14.03.2026</td>
+                                    <td><span class="status-badge active">✅ Успешно</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Ани Петросян</td>
+                                    <td><span class="plan-badge premium">💎 Премиум</span></td>
+                                    <td>₽299</td>
+                                    <td>10.03.2026</td>
+                                    <td><span class="status-badge active">✅ Успешно</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOTIFICATIONS SECTION -->
+        <section id="notifications" class="content-section">
+            <div class="two-columns">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>📤 Отправить уведомление</h2>
+                    </div>
+                    <form id="notificationForm" onsubmit="sendNotificationWithFiles(event)">
+                        <div class="form-group">
+                            <label>Заголовок уведомления</label>
+                            <input type="text" id="notifTitle" placeholder="Например: Новое обновление!" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Сообщение</label>
+                            <textarea id="notifMessage" rows="4" placeholder="Введите текст уведомления..." required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Тип уведомления</label>
+                                <select id="notifType">
+                                    <option value="info">ℹ️ Информация</option>
+                                    <option value="success">✅ Успех</option>
+                                    <option value="warning">⚠️ Предупреждение</option>
+                                    <option value="error">❌ Важное</option>
+                                    <option value="new">🎉 Новинка</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Целевая аудитория</label>
+                                <select id="notifTarget">
+                                    <option value="all">👥 Все пользователи</option>
+                                    <option value="premium">💎 Премиум</option>
+                                    <option value="free">🆓 Бесплатные</option>
+                                    <option value="parents">👨‍👩‍👧‍👦 Родители</option>
+                                    <option value="teachers">👨‍🏫 Учителя</option>
+                                    <option value="active">🟢 Активные</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Файловые вложения -->
+                        <div class="form-group file-upload-group">
+                            <label>📎 Прикрепить файлы</label>
+                            <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('notifFiles').click()">
+                                <div class="file-upload-icon">📁</div>
+                                <p>Нажмите для выбора файлов</p>
+                                <span>или перетащите файлы сюда</span>
+                                <small>📷 Фото, 🎬 Видео, 🎵 Музыка, 📄 Документы</small>
+                                <input type="file" id="notifFiles" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.txt,.xls,.xlsx,.ppt,.pptx,.zip,.rar" style="display:none">
+                            </div>
+                            <div class="file-preview-area" id="filePreviewArea" style="display:none">
+                                <h4>Выбранные файлы:</h4>
+                                <div class="file-list" id="fileList"></div>
+                                <button type="button" class="btn-secondary btn-small" onclick="clearAllFiles()">❌ Удалить все файлы</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary btn-large">
+                                <span>📤</span> Отправить уведомление
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="quick-notifications">
+                        <h3>⚡ Быстрые шаблоны</h3>
+                        <div class="quick-buttons">
+                            <button class="btn-quick" onclick="fillNotification('Новое задание!', 'Добавлено новое интересное задание в раздел игр!', 'new')">
+                                🎮 Новая игра
+                            </button>
+                            <button class="btn-quick" onclick="fillNotification('Обновление!', 'Мы обновили приложение и добавили новые функции!', 'info')">
+                                🔄 Обновление
+                            </button>
+                            <button class="btn-quick" onclick="fillNotification('Скидка 50%!', 'Только сегодня! Премиум подписка со скидкой 50%!', 'success')">
+                                💰 Скидка
+                            </button>
+                            <button class="btn-quick" onclick="fillNotification('Поздравляем!', 'Вы получили новое достижение!', 'success')">
+                                🏆 Достижение
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>📨 История уведомлений</h2>
+                        <button class="btn-secondary" onclick="clearAllNotifications()">🗑️ Очистить все</button>
+                    </div>
+                    <div class="notifications-list-admin" id="notificationsList">
+                        <!-- Уведомления будут загружены через JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETTINGS SECTION -->
+        <section id="settings" class="content-section">
+            <div class="settings-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>⚙️ Основные настройки</h2>
+                    </div>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label>Название приложения</label>
+                            <input type="text" value="Brainik" id="appName">
+                        </div>
+                        <div class="form-group">
+                            <label>Описание</label>
+                            <textarea rows="3" id="appDescription">Образовательная платформа для детей</textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email поддержки</label>
+                                <input type="email" value="support@brainik.app" id="supportEmail">
+                            </div>
+                            <div class="form-group">
+                                <label>Телефон</label>
+                                <input type="tel" value="+7 (999) 123-45-67" id="supportPhone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked id="enableReg">
+                                <span class="checkmark"></span>
+                                Разрешить регистрацию новых пользователей
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked id="enableNotif">
+                                <span class="checkmark"></span>
+                                Включить push-уведомления
+                            </label>
+                        </div>
+                        <button class="btn-primary" onclick="saveSettings()">💾 Сохранить настройки</button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>🔐 Безопасность</h2>
+                    </div>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label>Текущий пароль</label>
+                            <input type="password" id="currentPassword" placeholder="Введите текущий пароль">
+                        </div>
+                        <div class="form-group">
+                            <label>Новый пароль</label>
+                            <input type="password" id="newPassword" placeholder="Введите новый пароль">
+                        </div>
+                        <div class="form-group">
+                            <label>Подтвердите пароль</label>
+                            <input type="password" id="confirmPassword" placeholder="Повторите новый пароль">
+                        </div>
+                        <button class="btn-primary" onclick="changeAdminPassword()">🔑 Изменить пароль</button>
+
+                        <hr class="divider">
+
+                        <h3>🛡️ Двухфакторная аутентификация</h3>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="enable2FA">
+                                <span class="checkmark"></span>
+                                Включить 2FA
+                            </label>
+                        </div>
+                        <button class="btn-secondary" onclick="setup2FA()">⚙️ Настроить 2FA</button>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>📊 Системная информация</h2>
+                    </div>
+                    <div class="system-info">
+                        <div class="info-row">
+                            <span>Версия системы</span>
+                            <span class="info-value">Brainik Admin v2.0</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Последнее обновление</span>
+                            <span class="info-value">15.03.2026</span>
+                        </div>
+                        <div class="info-row">
+                            <span>База данных</span>
+                            <span class="info-value status-ok">🟢 Подключена</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Сервер</span>
+                            <span class="info-value status-ok">🟢 Онлайн</span>
+                        </div>
+                        <div class="info-row">
+                            <span>localStorage</span>
+                            <span class="info-value" id="storageUsed">Вычисление...</span>
+                        </div>
+                    </div>
+                    <button class="btn-secondary" onclick="clearCache()" style="margin-top: 15px; width: 100%;">
+                        🧹 Очистить кэш
+                    </button>
+                </div>
+
+                <div class="panel danger-panel">
+                    <div class="panel-header">
+                        <h2>⚠️ Опасная зона</h2>
+                    </div>
+                    <div class="danger-actions">
+                        <div class="danger-item">
+                            <div>
+                                <h4>🗑️ Очистить все данные</h4>
+                                <p>Удалить всех пользователей, игры и настройки</p>
+                            </div>
+                            <button class="btn-danger" onclick="resetAllData()">Сбросить</button>
+                        </div>
+                        <div class="danger-item">
+                            <div>
+                                <h4>📤 Экспорт данных</h4>
+                                <p>Скачать резервную копию всех данных</p>
+                            </div>
+                            <button class="btn-secondary" onclick="exportData()">Экспорт</button>
+                        </div>
+                        <div class="danger-item">
+                            <div>
+                                <h4>📥 Импорт данных</h4>
+                                <p>Загрузить данные из резервной копии</p>
+                            </div>
+                            <button class="btn-secondary" onclick="importData()">Импорт</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="adminModalOverlay" onclick="closeModal()"></div>
+    
+    <div class="modal" id="adminModal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Заголовок</h3>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <!-- Контент модального окна -->
+        </div>
+        <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeModal()">Отмена</button>
+            <button class="btn-primary" id="modalConfirm">Подтвердить</button>
+        </div>
+    </div>
+
+    <!-- Toast уведомления -->
+    <div class="toast-container" id="toastContainer"></div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Brainik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="js/pso/Authformsadmin.js" defer></script>
+    <link rel="stylesheet" href="css/Authformsadmin.css">
+</head>
+<body>
+    <div class="particles" id="particles-js"></div>
+
+    <div class="container">
+        <div class="toggle">
+            <button class="toggle-btn active" data-form="login">Вход</button>
+            <button class="toggle-btn" data-form="register">Регистрация</button>
+        </div>
+
+        <div class="form-wrapper">
+            <form class="form active" id="login">
+                <h2>Добро пожаловать</h2>
+                <p class="subtitle">Войдите в админ панель</p>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="btn">Войти</button>
+                <div class="link">
+                    Нет аккаунта? <a href="#" class="switch-link" data-target="register">Зарегистрироваться</a>
+                </div>
+            </form>
+
+            <form class="form hidden" id="register">
+                <h2>Создать аккаунт</h2>
+                <p class="subtitle">Регистрация администратора</p>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="registerName" placeholder="Имя" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="registerPassword" placeholder="Пароль" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="registerConfirmPassword" placeholder="Повторите пароль" required>
+                </div>
+                <button type="submit" class="btn">Зарегистрироваться</button>
+                <div class="link">
+                    Уже есть аккаунт? <a href="#" class="switch-link" data-target="login">Войти</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Обработка форм
+        document.getElementById('login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Проверка администратора (в реальном приложении здесь будет запрос к серверу)
+            const admins = JSON.parse(localStorage.getItem('admins') || '[]');
+            const admin = admins.find(a => a.email === email && a.password === password);
+            
+            if (admin || (email === 'admin@brainik.com' && password === 'admin123')) {
+                // Сохраняем сессию
+                localStorage.setItem('currentAdmin', JSON.stringify({
+                    name: admin?.name || 'Администратор',
+                    email: email,
+                    role: 'Супер админ',
+                    loginTime: new Date().toISOString()
+                }));
+                
+                // Перенаправляем в админ панель
+                window.location.href = 'admin-panel.html';
+            } else {
+                alert('Неверный email или пароль');
+            }
+        });
+
+        document.getElementById('register').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Пароли не совпадают');
+                return;
+            }
+            
+            // Сохраняем администратора
+            const admins = JSON.parse(localStorage.getItem('admins') || '[]');
+            
+            if (admins.find(a => a.email === email)) {
+                alert('Администратор с таким email уже существует');
+                return;
+            }
+            
+            admins.push({
+                name: name,
+                email: email,
+                password: password,
+                role: 'Администратор',
+                createdAt: new Date().toISOString()
+            });
+            
+            localStorage.setItem('admins', JSON.stringify(admins));
+            
+            alert('Регистрация успешна! Теперь вы можете войти.');
+            
+            // Переключаем на форму входа
+            document.querySelector('[data-target="login"]').click();
+            
+            // Очищаем форму регистрации
+            document.getElementById('register').reset();
+        });
+    </script>
+</body>
+</html>

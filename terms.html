@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Условия использования</title>
+    <link rel="stylesheet" href="css/Styles.css">
+    <link rel="stylesheet" href="css/botchat.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/botchat.js" defer></script>
+
+</head>
+<body>
+
+<div class="terms-container">
+    <h1>Условия использования</h1>
+    
+    <div class="age-warning">
+        ⚠️ Контент 18+ | Только для лиц старше 18 лет
+    </div>
+
+    <h2>1. Принятие условий</h2>
+    <p>Регистрируясь на данном сайте, вы подтверждаете, что вам исполнилось 18 лет, и вы соглашаетесь со всеми нижеизложенными условиями использования. Если вы не согласны с каким-либо пунктом, пожалуйста, не используйте наш сервис.</p>
+
+    <h2>2. Возрастные ограничения</h2>
+    <ul>
+        <li>Сайт содержит материалы для взрослых (18+)</li>
+        <li>Доступ разрешен только лицам старше 18 лет</li>
+        <li>Мы оставляем за собой право запросить подтверждение возраста</li>
+        <li>Предоставление ложной информации о возрасте влечет за собой блокировку аккаунта</li>
+    </ul>
+
+    <h2>3. Авторские права</h2>
+    <ul>
+        <li>Весь контент на сайте защищен авторским правом</li>
+        <li>Запрещено копирование, распространение или модификация материалов без письменного разрешения</li>
+        <li>Торговые марки и логотипы являются собственностью их владельцев</li>
+        <li>Пользователи сохраняют права на свой пользовательский контент</li>
+    </ul>
+
+    <h2>4. Запрещенная деятельность</h2>
+    <ul>
+        <li>Размещение незаконного контента</li>
+        <li>Оскорбления, угрозы, дискриминация других пользователей</li>
+        <li>Спам, фишинг, распространение вредоносного ПО</li>
+        <li>Взлом, попытки несанкционированного доступа к системе</li>
+        <li>Создание фейковых аккаунтов и накрутка статистики</li>
+        <li>Разглашение личной информации других пользователей (доксинг)</li>
+    </ul>
+
+    <h2>5. Учетная запись и безопасность</h2>
+    <ul>
+        <li>Вы несете ответственность за сохранность своего пароля</li>
+        <li>Немедленно сообщайте о любом несанкционированном использовании вашего аккаунта</li>
+        <li>Один пользователь — один аккаунт</li>
+        <li>Мы оставляем за собой право удалить неактивные аккаунты</li>
+    </ul>
+
+    <h2>6. Модерация и блокировка</h2>
+    <ul>
+        <li>Администрация имеет право удалять контент, нарушающий правила</li>
+        <li>За нарушения возможна временная или перманентная блокировка</li>
+        <li>Оспорить блокировку можно через службу поддержки</li>
+        <li>Решение администрации является окончательным</li>
+    </ul>
+
+    <h2>7. Отказ от ответственности</h2>
+    <p>Сервис предоставляется "как есть". Мы не гарантируем бесперебойную работу и не несем ответственности за убытки, возникшие в результате использования или невозможности использования сервиса.</p>
+
+    <h2>8. Изменения в условиях</h2>
+    <p>Мы оставляем за собой право изменять настоящие условия в любое время. Продолжая использование сервиса после внесения изменений, вы принимаете обновленные условия.</p>
+
+    <h2>9. Контактная информация</h2>
+    <p>По всем вопросам обращайтесь: support@example.com</p>
+
+    <p style="margin-top: 30px; text-align: center; font-weight: bold; color: #151717;">
+        Последнее обновление: 21 марта 2026 г.
+    </p>
+
+    <a href="Index.html" class="back-link">← Вернуться к регистрации</a>
+</div>
+
+    <!-- Bot Chat Button -->
+    <button type="button" class="bot-fab" id="botFab" aria-label="Bot">🤖</button>
+
+    <!-- Bot Chat Modal -->
+    <div id="botChatModal" class="hidden fixed inset-0 z-[3000]">
+        <div id="botChatBackdrop" class="absolute inset-0 bg-black/60"></div>
+        <div class="relative w-full h-full tail-container">
+            <div class="flex flex-col h-screen">
+                <header class="header-gradient px-6 py-5 flex items-center justify-between border-b border-zinc-800 shadow-2xl">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-4xl shadow-xl animate-pulse">🤖</div>
+                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-zinc-950 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold tracking-tighter text-yellow-300">AI Поддержка</h1>
+                            <p class="text-xs text-green-400 flex items-center gap-1">
+                                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                онлайн • отвечает мгновенно
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="clearChat()" class="flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 transition-all rounded-2xl text-sm font-medium">
+                            <span class="text-lg">🗑️</span>Очистить чат
+                        </button>
+                        <button type="button" id="botChatClose" class="w-11 h-11 flex items-center justify-center text-2xl bg-zinc-900 hover:bg-zinc-800 rounded-2xl border border-zinc-800">✕</button>
+                        <div class="text-xs px-4 py-2 bg-zinc-900 rounded-3xl border border-yellow-400/30 text-yellow-300 font-medium">v1.0</div>
+                    </div>
+                </header>
+                <div id="chat" class="chat-container flex-1 overflow-y-auto p-8 space-y-8 bg-[radial-gradient(at_bottom_right,#18181b_0%,transparent_70%)] relative"></div>
+                <div class="bg-zinc-900 border-t border-zinc-700 p-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div id="attachments-preview" class="flex gap-3 mb-3 flex-wrap"></div>
+                        <div class="flex items-center gap-3 bg-zinc-800 rounded-3xl px-3 py-2 shadow-2xl border border-zinc-700">
+                            <button type="button" onclick="triggerFileInput()" class="w-11 h-11 flex items-center justify-center text-3xl hover:bg-zinc-700 transition-all rounded-2xl active:scale-90">📎</button>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*,audio/*,application/pdf,.doc,.docx,.txt" class="hidden">
+                            <input id="message-input" type="text" placeholder="Напишите сообщение..." class="flex-1 bg-transparent outline-none text-lg placeholder-zinc-500 py-4 px-4 font-medium" onkeydown="if(event.key === 'Enter') sendTextMessage()">
+                            <button type="button" onclick="sendTextMessage()" class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl shadow-xl active:scale-95 transition-all">➤</button>
+                        </div>
+                        <p class="text-center text-[10px] text-zinc-500 mt-4 tracking-widest">Поддерживает: фото • музыка • видео • PDF • любые файлы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

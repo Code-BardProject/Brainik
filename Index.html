@@ -1,0 +1,167 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/Styles.css">
+    <link rel="stylesheet" href="css/botchat.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/botchat.js" defer></script>
+    <script src="js/Script.js" defer></script>
+    <script src="js/GameStore.js" defer></script>
+    <script src="js/pso/Authforms.js" defer></script>
+ </head>
+ <body>
+    
+<div class="container">
+
+  <!-- Форма входа -->
+  <form id="signInForm" class="form active">
+    <div class="flex-column">
+      <label>Email</label>
+    </div>
+    <div class="inputForm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+        <path d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"/>
+      </svg>
+      <input placeholder="Введите ваш email" class="input" type="email" required>
+    </div>
+
+    <div class="flex-column">
+      <label>Пароль</label>
+    </div>
+    <div class="inputForm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-64 0 512 512">
+        <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"/>
+        <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"/>
+      </svg>
+      <input placeholder="Введите пароль" class="input" type="password" required>
+    </div>
+
+    <div class="flex-row">
+      <div>
+        <input type="checkbox" id="remember">
+        <label for="remember">Запомнить меня</label>
+      </div>
+      <span class="span">Забыли пароль?</span>
+    </div>
+
+    <button type="submit" class="button-submit">Войти</button>
+
+    <p class="p">Нет аккаунта? <span class="span toggle-link" data-target="signUpForm">Зарегистрироваться</span></p>
+
+ 
+  </form>
+
+  <!-- Форма регистрации -->
+  <form id="signUpForm" class="form">
+    <div class="flex-column">
+      <label>Имя или никнейм</label>
+    </div>
+    <div class="inputForm">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <input placeholder="Как вас называть?" class="input" type="text" required>
+    </div>
+
+    <div class="flex-column">
+      <label>Email</label>
+    </div>
+    <div class="inputForm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+        <path d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"/>
+      </svg>
+      <input placeholder="example@mail.com" class="input" type="email" required>
+    </div>
+
+    <div class="flex-column">
+      <label>Пароль</label>
+    </div>
+    <div class="inputForm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-64 0 512 512">
+        <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"/>
+        <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"/>
+      </svg>
+      <input placeholder="Минимум 8 символов" class="input" type="password" required>
+    </div>
+
+    <div class="flex-column">
+      <label>Повторите пароль</label>
+    </div>
+    <div class="inputForm">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-64 0 512 512">
+        <path d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0"/>
+        <path d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0"/>
+      </svg>
+      <input placeholder="Повторите пароль" class="input" type="password" required>
+    </div>
+
+    <div class="flex-row" style="margin: 12px 0 4px;">
+      <div>
+        <input type="checkbox" id="terms-agree" required>
+        <label for="terms-agree">Соглашаюсь с <a href="terms.html" class="span" target="_blank">условиями использования</a></label>
+      </div>
+    </div>
+
+    <button type="submit" class="button-submit">Создать аккаунт</button>
+
+        <p class="p">Уже есть аккаунт? <span class="span toggle-link" data-target="signInForm">Войти</span></p>
+
+    </form>
+
+</div>
+
+<!-- Bot Chat Button -->
+<button type="button" class="bot-fab" id="botFab" aria-label="Bot">🤖</button>
+
+<!-- Bot Chat Modal -->
+<div id="botChatModal" class="hidden fixed inset-0 z-[3000]">
+    <div id="botChatBackdrop" class="absolute inset-0 bg-black/60"></div>
+    <div class="relative w-full h-full tail-container">
+        <div class="flex flex-col h-screen">
+            <header class="header-gradient px-6 py-5 flex items-center justify-between border-b border-zinc-800 shadow-2xl">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-4xl shadow-xl animate-pulse">🤖</div>
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-zinc-950 flex items-center justify-center">
+                            <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-tighter text-yellow-300">AI Поддержка</h1>
+                        <p class="text-xs text-green-400 flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            онлайн • отвечает мгновенно
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button type="button" onclick="clearChat()" class="flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 transition-all rounded-2xl text-sm font-medium">
+                        <span class="text-lg">🗑️</span>Очистить чат
+                    </button>
+                    <button type="button" id="botChatClose" class="w-11 h-11 flex items-center justify-center text-2xl bg-zinc-900 hover:bg-zinc-800 rounded-2xl border border-zinc-800">✕</button>
+                    <div class="text-xs px-4 py-2 bg-zinc-900 rounded-3xl border border-yellow-400/30 text-yellow-300 font-medium">v1.0</div>
+                </div>
+            </header>
+            <div id="chat" class="chat-container flex-1 overflow-y-auto p-8 space-y-8 bg-[radial-gradient(at_bottom_right,#18181b_0%,transparent_70%)] relative"></div>
+            <div class="bg-zinc-900 border-t border-zinc-700 p-6">
+                <div class="max-w-4xl mx-auto">
+                    <div id="attachments-preview" class="flex gap-3 mb-3 flex-wrap"></div>
+                    <div class="flex items-center gap-3 bg-zinc-800 rounded-3xl px-3 py-2 shadow-2xl border border-zinc-700">
+                        <button type="button" onclick="triggerFileInput()" class="w-11 h-11 flex items-center justify-center text-3xl hover:bg-zinc-700 transition-all rounded-2xl active:scale-90">📎</button>
+                        <input type="file" id="file-input" multiple accept="image/*,video/*,audio/*,application/pdf,.doc,.docx,.txt" class="hidden">
+                        <input id="message-input" type="text" placeholder="Напишите сообщение..." class="flex-1 bg-transparent outline-none text-lg placeholder-zinc-500 py-4 px-4 font-medium" onkeydown="if(event.key === 'Enter') sendTextMessage()">
+                        <button type="button" onclick="sendTextMessage()" class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl shadow-xl active:scale-95 transition-all">➤</button>
+                    </div>
+                    <p class="text-center text-[10px] text-zinc-500 mt-4 tracking-widest">Поддерживает: фото • музыка • видео • PDF • любые файлы</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель родителей - Brainik</title>
+  <script src="js/parentsdashboard.js" defer></script>
+    <script src="js/i18n.js" defer></script>
+    <link rel="stylesheet" href="css/parentsdashboard.css">
+    <link rel="stylesheet" href="css/botchat.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/botchat.js" defer></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="logo">🧠 Brainik</a>
+            <span class="parent-badge">👨‍👩‍👧‍👦 Родитель</span>
+            <button class="logout-btn" onclick="logout()">Выйти</button>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">
+                <svg viewBox="0 0 24 24" fill="currentColor" style="width:30px;height:30px;">
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="home.html">Главная</a>
+        <a href="games.html">ИГРИ</a>
+        <a href="hero-cards.html">Hero Cards</a>
+        <a href="ranking.html">Рейтинг</a>
+        <a href="dashboard.html">Мой кабинет</a>
+        <a href="#" onclick="logout(); return false;">Выйти</a>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Панель управления</h1>
+            <p>Отслеживай прогресс своих детей и управляй их обучением</p>
+        </div>
+
+        <!-- Выбор ребёнка -->
+        <div class="children-tabs">
+            <div class="child-tab active">
+                <div class="child-avatar">👧</div>
+                <div class="child-info">
+                    <h4>Мария</h4>
+                    <p>8 лет • Уровень 5</p>
+                </div>
+            </div>
+            <div class="child-tab">
+                <div class="child-avatar">👦</div>
+                <div class="child-info">
+                    <h4>Давид</h4>
+                    <p>6 лет • Уровень 3</p>
+                </div>
+            </div>
+            <div class="add-child-btn">+</div>
+        </div>
+
+        <!-- Статистика -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>12</h3>
+                <p>Заданий выполнено</p>
+                <span class="trend">↑ +3 за неделю</span>
+            </div>
+            <div class="stat-card">
+                <h3>45</h3>
+                <p>Минут занятий</p>
+                <span class="trend">↑ +15%</span>
+            </div>
+            <div class="stat-card">
+                <h3>8</h3>
+                <p>Дней подряд</p>
+                <span class="trend down">↓ Было 12</span>
+            </div>
+            <div class="stat-card">
+                <h3>156</h3>
+                <p>Звёзд собрано</p>
+                <span class="trend">↑ +28</span>
+            </div>
+        </div>
+
+        <!-- Активность и достижения -->
+        <div class="activity-section">
+            <div class="activity-card">
+                <h3>📅 Активность за месяц</h3>
+                <div class="calendar-heatmap">
+                    <div class="day-cell empty">Пн</div>
+                    <div class="day-cell high">1</div>
+                    <div class="day-cell medium">2</div>
+                    <div class="day-cell low">3</div>
+                    <div class="day-cell high">4</div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty">Вт</div>
+                    <div class="day-cell medium">5</div>
+                    <div class="day-cell high">6</div>
+                    <div class="day-cell high">7</div>
+                    <div class="day-cell low">8</div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty">Ср</div>
+                    <div class="day-cell low">9</div>
+                    <div class="day-cell medium">10</div>
+                    <div class="day-cell high">11</div>
+                    <div class="day-cell medium">12</div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty">Чт</div>
+                    <div class="day-cell high">13</div>
+                    <div class="day-cell high">14</div>
+                    <div class="day-cell medium">15</div>
+                    <div class="day-cell low">16</div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty">Пт</div>
+                    <div class="day-cell medium">17</div>
+                    <div class="day-cell high">18</div>
+                    <div class="day-cell high">19</div>
+                    <div class="day-cell medium">20</div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty">Сб</div>
+                    <div class="day-cell high">21</div>
+                    <div class="day-cell medium">22</div>
+                    <div class="day-cell empty">23</div>
+                    <div class="day-cell high">24</div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty">Вс</div>
+                    <div class="day-cell high">25</div>
+                    <div class="day-cell high">26</div>
+                    <div class="day-cell medium">27</div>
+                    <div class="day-cell high">28</div>
+                    <div class="day-cell empty"></div>
+                    <div class="day-cell empty"></div>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <h3>🏆 Последние достижения</h3>
+                <div class="achievements-list">
+                    <div class="achievement-item">
+                        <span class="achievement-icon">⭐</span>
+                        <div class="achievement-info">
+                            <h4>Звёздный ученик</h4>
+                            <p>Собрано 100 звёзд</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item">
+                        <span class="achievement-icon">🎴</span>
+                        <div class="achievement-info">
+                            <h4>Первая карточка</h4>
+                            <p>Получена карточка героя</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item">
+                        <span class="achievement-icon">🔥</span>
+                        <div class="achievement-info">
+                            <h4>Недельный стрик</h4>
+                            <p>7 дней подряд</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Задания -->
+        <div class="tasks-section">
+            <h3>📋 Задания на сегодня</h3>
+            <div class="task-item">
+                <div class="task-info">
+                    <h4>Математика: Счёт до 20</h4>
+                    <p>15 минут • Возраст 4-6</p>
+                </div>
+                <span class="task-status done">Выполнено ✓</span>
+            </div>
+            <div class="task-item">
+                <div class="task-info">
+                    <h4>История: Тигран Великий</h4>
+                    <p>20 минут • Age 7+</p>
+                </div>
+                <span class="task-status done">Выполнено ✓</span>
+            </div>
+            <div class="task-item">
+                <div class="task-info">
+                    <h4>Логика: Пазл "Замок"</h4>
+                    <p>10 минут • Любой возраст</p>
+                </div>
+                <span class="task-status pending">В процессе</span>
+            </div>
+            <button class="assign-task-btn" onclick="assignTask()">+ Назначить новое задание</button>
+        </div>
+    </main>
+ 
+    <!-- Bot Chat Button -->
+    <button type="button" class="bot-fab" id="botFab" aria-label="Bot">🤖</button>
+
+    <!-- Bot Chat Modal -->
+    <div id="botChatModal" class="hidden fixed inset-0 z-[3000]">
+        <div id="botChatBackdrop" class="absolute inset-0 bg-black/60"></div>
+        <div class="relative w-full h-full tail-container">
+            <div class="flex flex-col h-screen">
+                <header class="header-gradient px-6 py-5 flex items-center justify-between border-b border-zinc-800 shadow-2xl">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-4xl shadow-xl animate-pulse">🤖</div>
+                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-zinc-950 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold tracking-tighter text-yellow-300">AI Поддержка</h1>
+                            <p class="text-xs text-green-400 flex items-center gap-1">
+                                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                онлайн • отвечает мгновенно
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="clearChat()" class="flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 transition-all rounded-2xl text-sm font-medium">
+                            <span class="text-lg">🗑️</span>Очистить чат
+                        </button>
+                        <button type="button" id="botChatClose" class="w-11 h-11 flex items-center justify-center text-2xl bg-zinc-900 hover:bg-zinc-800 rounded-2xl border border-zinc-800">✕</button>
+                        <div class="text-xs px-4 py-2 bg-zinc-900 rounded-3xl border border-yellow-400/30 text-yellow-300 font-medium">v1.0</div>
+                    </div>
+                </header>
+                <div id="chat" class="chat-container flex-1 overflow-y-auto p-8 space-y-8 bg-[radial-gradient(at_bottom_right,#18181b_0%,transparent_70%)] relative"></div>
+                <div class="bg-zinc-900 border-t border-zinc-700 p-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div id="attachments-preview" class="flex gap-3 mb-3 flex-wrap"></div>
+                        <div class="flex items-center gap-3 bg-zinc-800 rounded-3xl px-3 py-2 shadow-2xl border border-zinc-700">
+                            <button type="button" onclick="triggerFileInput()" class="w-11 h-11 flex items-center justify-center text-3xl hover:bg-zinc-700 transition-all rounded-2xl active:scale-90">📎</button>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*,audio/*,application/pdf,.doc,.docx,.txt" class="hidden">
+                            <input id="message-input" type="text" placeholder="Напишите сообщение..." class="flex-1 bg-transparent outline-none text-lg placeholder-zinc-500 py-4 px-4 font-medium" onkeydown="if(event.key === 'Enter') sendTextMessage()">
+                            <button type="button" onclick="sendTextMessage()" class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl shadow-xl active:scale-95 transition-all">➤</button>
+                        </div>
+                        <p class="text-center text-[10px] text-zinc-500 mt-4 tracking-widest">Поддерживает: фото • музыка • видео • PDF • любые файлы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</body>
+</html>

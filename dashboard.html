@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - Brainik</title>
+    
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/botchat.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/botchat.js" defer></script>
+    <script src="js/gamification.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+    <script src="js/i18n.js" defer></script>
+ 
+</head>
+<body>
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+               
+                 <a href="home.html" class="logo">
+                    <div class="logo-icon">🧠</div>
+                    <div class="logo-text">Brainik</div>
+                 </a>
+                
+            </div>
+            
+            <!-- Mobile User Info -->
+            <div class="mobile-user-info">
+                <p id="mobileUserName">Александр</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><span class="nav-link active" onclick="showSection('home')">🏠 Главная</span></li>
+                <li class="nav-item"><span class="nav-link" onclick="showSection('games')">🎮 Мои игры</span></li>
+                <li class="nav-item"><span class="nav-link" onclick="showSection('favorite')">⭐ Избранное</span></li>
+                <li class="nav-item"><span class="nav-link" onclick="showSection('tests')">📝 Тесты</span></li>
+                <li class="nav-item"><span class="nav-link" onclick="showSection('wallet')">💰 Кошелёк</span></li>
+                <li class="nav-item"><span class="nav-link" onclick="showSection('achievements')">🏆 Достижения</span></li>
+                <li class="nav-item"><span class="nav-link" onclick="showSection('certificates')">📜 Сертификаты</span></li>
+                <li class="nav-item"><span class="nav-link" onclick="showSection('settings')">⚙️ Настройки</span></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">🚪 Выйти</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <div class="welcome-text">
+                    <h1>Привет, <span id="userName">Александр</span>! 👋</h1>
+                    <p>Чему будем учиться сегодня?</p>
+                </div>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Поиск...">
+                    </div>
+                    <button class="notification-btn" onclick="showNotifications()">
+                        🔔<span class="notification-badge" id="notifBadge">3</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <div class="stat-icon purple">🏆</div>
+                    <div class="stat-info">
+                        <h4>Всего баллов</h4>
+                        <p id="totalPoints">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">✅</div>
+                    <div class="stat-info">
+                        <h4>Правильных ответов</h4>
+                        <p id="answersStats">0/0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">📋</div>
+                    <div class="stat-info">
+                        <h4>Заданий выполнено</h4>
+                        <p id="taskProgress">0 из 12</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">📊</div>
+                    <div class="stat-info">
+                        <h4>Общий прогресс</h4>
+                        <p id="totalProgress">0%</p>
+                    </div>
+                </div>
+                <div class="stat-card" onclick="showSection('wallet')">
+                    <div class="stat-icon" style="background: #fef3c7;">💰</div>
+                    <div class="stat-info">
+                        <h4>Голоса</h4>
+                        <p id="voiceBalance">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home Section -->
+            <div id="home" class="content-section active">
+                <div class="hero-banner">
+                    <div class="hero-content">
+                        <h2>Умный ИИ для обучения</h2>
+                        <p>Наши игры с искусственным интеллектом помогают детям учиться быстрее и с удовольствием!</p>
+                        <button class="hero-btn" onclick="showSection('games')">🎮 Начать играть →</button>
+                    </div>
+                    <div class="hero-illustration">🎓</div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="left-column">
+                        <div class="learning-path">
+                            <h3>Твой путь обучения 📚</h3>
+                            <div class="path-cards">
+                                <div class="path-card">
+                                    <div class="path-card-icon" style="background: #dbeafe;">🎨</div>
+                                    <h4>Цвета и формы</h4>
+                                    <p>Для детей 2-3 лет</p>
+                                    <div class="progress-bar"><div class="progress-fill" id="progress-colors" style="width: 0%;"></div></div>
+                                    <div class="progress-text" id="text-colors">0% завершено</div>
+                                </div>
+                                <div class="path-card">
+                                    <div class="path-card-icon" style="background: #f3e8ff;">🔢</div>
+                                    <h4>Математика</h4>
+                                    <p>Для детей 4-6 лет</p>
+                                    <div class="progress-bar"><div class="progress-fill" id="progress-math" style="width: 0%;"></div></div>
+                                    <div class="progress-text" id="text-math">0% завершено</div>
+                                </div>
+                                <div class="path-card">
+                                    <div class="path-card-icon" style="background: #ffedd5;">📖</div>
+                                    <h4>Чтение</h4>
+                                    <p>Для детей 7-9 лет</p>
+                                    <div class="progress-bar"><div class="progress-fill" id="progress-reading" style="width: 0%;"></div></div>
+                                    <div class="progress-text" id="text-reading">0% завершено</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right-column">
+                        <div class="course-progress">
+                            <h3>Игры в прогрессе 🎯</h3>
+                            <div class="course-list">
+                                <a href="games.html" class="course-item">
+                                    <div class="course-icon" style="background: #dbeafe;">🧩</div>
+                                    <div class="course-info"><h4>Пазл-сборка</h4><p id="level-puzzle">Уровень 1 из 10</p></div>
+                                    <div class="course-arrow">›</div>
+                                </a>
+                                <a href="games.html" class="course-item">
+                                    <div class="course-icon" style="background: #f3e8ff;">🧮</div>
+                                    <div class="course-info"><h4>Логика</h4><p id="level-logic">Уровень 1 из 10</p></div>
+                                    <div class="course-arrow">›</div>
+                                </a>
+                                <a href="games.html" class="course-item">
+                                    <div class="course-icon" style="background: #ffedd5;">🔤</div>
+                                    <div class="course-info"><h4>Алфавит</h4><p id="level-alphabet">Уровень 1 из 10</p></div>
+                                    <div class="course-arrow">›</div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="learning-chart">
+                            <h3>Твой прогресс 📊</h3>
+                            <div class="chart-container">
+                                <div class="chart-bar" id="chart-0" style="height: 20%;" data-value="0%"></div>
+                                <div class="chart-bar" id="chart-1" style="height: 25%;" data-value="0%"></div>
+                                <div class="chart-bar" id="chart-2" style="height: 30%;" data-value="0%"></div>
+                                <div class="chart-bar" id="chart-3" style="height: 35%;" data-value="0%"></div>
+                                <div class="chart-bar" id="chart-4" style="height: 40%;" data-value="0%"></div>
+                                <div class="chart-bar" id="chart-5" style="height: 45%;" data-value="0%"></div>
+                            </div>
+                            <div class="chart-labels">
+                                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Section -->
+            <div id="games" class="content-section">
+                <h2 class="section-title">Мои игры 🎮</h2>
+                <p style="color: #666; margin-bottom: 30px;">Все игры доступны на странице игр. Нажмите кнопку ниже чтобы начать!</p>
+                <a href="games.html" class="hero-btn">🎮 Перейти к играм →</a>
+            </div>
+
+            <!-- Wallet Section -->
+            <div id="wallet" class="content-section">
+                <h2 class="section-title">Мой кошелёк 💰</h2>
+                <div class="wallet-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 30px;">
+                    <div class="wallet-card" onclick="openExchangeModal('buy')" style="background: linear-gradient(135deg, #FFD700, #FFA500); border-radius: 20px; padding: 30px; text-align: center; color: white; cursor: pointer;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">💎</div>
+                        <h3 style="font-size: 14px; margin-bottom: 10px;">Голоса</h3>
+                        <p id="walletVoiceBalance" style="font-size: 28px; font-weight: 700;">0</p>
+                        <button style="margin-top: 15px; padding: 10px 25px; background: white; color: #333; border: none; border-radius: 25px; font-weight: 600; cursor: pointer;">Купить</button>
+                    </div>
+                    <div class="wallet-card" onclick="openExchangeModal('exchange')" style="background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 20px; padding: 30px; text-align: center; color: white; cursor: pointer;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🔄</div>
+                        <h3 style="font-size: 14px; margin-bottom: 10px;">Баллы</h3>
+                        <p id="walletPointsBalance" style="font-size: 28px; font-weight: 700;">0</p>
+                        <button style="margin-top: 15px; padding: 10px 25px; background: white; color: #333; border: none; border-radius: 25px; font-weight: 600; cursor: pointer;">Обменять</button>
+                    </div>
+                    <div class="wallet-card" onclick="openExchangeModal('transfer')" style="background: white; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); cursor: pointer;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">💳</div>
+                        <h3 style="font-size: 14px; color: #666; margin-bottom: 10px;">Баланс</h3>
+                        <p id="walletMoneyBalance" style="font-size: 28px; font-weight: 700; color: #333;">₽0</p>
+                        <button style="margin-top: 15px; padding: 10px 25px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 25px; font-weight: 600; cursor: pointer;">Перевести</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements Section -->
+            <div id="achievements" class="content-section">
+                <h2 class="section-title">Мои достижения 🏆</h2>
+                <div class="achievements-grid" id="achievementsContainer">
+                    <!-- Achievements will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Certificates Section -->
+            <div id="certificates" class="content-section">
+                <h2 class="section-title">Мои сертификаты 📜</h2>
+                <div class="certificates-grid" id="certificatesContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📜</div>
+                        <p>Пока нет сертификатов</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Пройдите тесты и игры, чтобы получить сертификаты!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tests Section -->
+            <div id="tests" class="content-section">
+                <h2 class="section-title">Тесты 📝</h2>
+                <div class="tests-grid">
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>🎨 Тест: Цвета</h4>
+                        </div>
+                        <div class="test-details">
+                            <span class="test-detail">📋 10 вопросов</span>
+                            <span class="test-detail">⏱️ 5 минут</span>
+                        </div>
+                        <button class="start-test-btn" onclick="startTest('colors')">Начать тест</button>
+                    </div>
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>🔢 Тест: Математика</h4>
+                        </div>
+                        <div class="test-details">
+                            <span class="test-detail">📋 15 вопросов</span>
+                            <span class="test-detail">⏱️ 10 минут</span>
+                        </div>
+                        <button class="start-test-btn" onclick="startTest('math')">Начать тест</button>
+                    </div>
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>📚 Тест: Алфавит</h4>
+                        </div>
+                        <div class="test-details">
+                            <span class="test-detail">📋 20 вопросов</span>
+                            <span class="test-detail">⏱️ 10 минут</span>
+                        </div>
+                        <button class="start-test-btn" onclick="startTest('alphabet')">Начать тест</button>
+                    </div>
+                    <div class="test-card">
+                        <div class="test-header">
+                            <h4>🧩 Тест: Логика</h4>
+                        </div>
+                        <div class="test-details">
+                            <span class="test-detail">📋 12 вопросов</span>
+                            <span class="test-detail">⏱️ 15 минут</span>
+                        </div>
+                        <button class="start-test-btn" onclick="startTest('logic')">Начать тест</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Favorites Section -->
+            <div id="favorite" class="content-section">
+                <h2 class="section-title">Избранное ⭐</h2>
+                <div class="favorites-grid" id="favoritesContainer">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⭐</div>
+                        <p>Пока нет избранных игр</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Добавляйте игры в избранное на странице игр!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Settings Section -->
+            <div id="settings" class="content-section">
+                <h2 class="section-title">Настройки ⚙️</h2>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 30px; background: white; padding: 10px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                    <button class="settings-tab active" onclick="showSettingsTab('profile')" style="padding: 12px 24px; border-radius: 12px; border: none; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 15px; font-weight: 500; cursor: pointer;">👤 Профиль</button>
+                    <button class="settings-tab" onclick="showSettingsTab('password')" style="padding: 12px 24px; border-radius: 12px; border: none; background: none; font-size: 15px; font-weight: 500; color: #666; cursor: pointer;">🔒 Безопасность</button>
+                </div>
+
+                <!-- Profile Tab -->
+                <div id="profile" class="settings-content active" style="display: block;">
+                    <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); max-width: 600px;">
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500;">Имя</label>
+                            <input type="text" id="settingsName" placeholder="Ваше имя" style="width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px;">
+                        </div>
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500;">Никнейм</label>
+                            <input type="text" id="settingsNickname" placeholder="Ваш никнейм" style="width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px;">
+                        </div>
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500;">Email</label>
+                            <input type="email" id="settingsEmail" placeholder="Ваш email" style="width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px;">
+                        </div>
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500;">Дата рождения</label>
+                            <input type="date" id="settingsBirthdate" style="width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px;">
+                        </div>
+                        <button onclick="saveProfileSettings()" style="padding: 14px 40px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 25px; font-size: 15px; font-weight: 600; cursor: pointer;">💾 Сохранить изменения</button>
+                    </div>
+                </div>
+
+                <!-- Password Tab -->
+                <div id="password" class="settings-content" style="display: none;">
+                    <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); max-width: 600px;">
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500;">Текущий пароль</label>
+                            <input type="password" id="currentPassword" placeholder="Введите текущий пароль" style="width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px;">
+                        </div>
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500;">Новый пароль</label>
+                            <input type="password" id="newPassword" placeholder="Введите новый пароль" style="width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px;">
+                            <p style="font-size: 12px; color: #888; margin-top: 5px;">Минимум 6 символов</p>
+                        </div>
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 500;">Повторите новый пароль</label>
+                            <input type="password" id="confirmPassword" placeholder="Повторите новый пароль" style="width: 100%; padding: 14px 18px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px;">
+                        </div>
+                        <button onclick="changePassword()" style="padding: 14px 40px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 25px; font-size: 15px; font-weight: 600; cursor: pointer;">🔒 Изменить пароль</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Exchange Modal -->
+    <div id="exchangeModal" onclick="closeExchangeModal(event)" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; align-items: center; justify-content: center;">
+        <div onclick="event.stopPropagation()" style="background: white; border-radius: 24px; padding: 40px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 id="modalTitle" style="font-size: 24px; color: #333;">Покупка голосов</h2>
+                <button onclick="closeExchangeModal()" style="width: 40px; height: 40px; border-radius: 50%; border: none; background: #f0f0f0; font-size: 20px; cursor: pointer;">×</button>
+            </div>
+            <div id="modalContent">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px;">
+                    <div onclick="selectExchange(this, 100, 50)" style="padding: 20px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 16px; text-align: center; cursor: pointer; border: 2px solid transparent;">
+                        <div style="font-size: 24px; font-weight: 700; margin-bottom: 5px;">100 🎮</div>
+                        <div style="font-size: 14px; opacity: 0.8;">₽50</div>
+                    </div>
+                    <div onclick="selectExchange(this, 500, 200)" style="padding: 20px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 16px; text-align: center; cursor: pointer; border: 2px solid transparent;">
+                        <div style="font-size: 24px; font-weight: 700; margin-bottom: 5px;">500 🎮</div>
+                        <div style="font-size: 14px; opacity: 0.8;">₽200</div>
+                    </div>
+                    <div onclick="selectExchange(this, 1000, 350)" style="padding: 20px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 16px; text-align: center; cursor: pointer; border: 2px solid transparent;">
+                        <div style="font-size: 24px; font-weight: 700; margin-bottom: 5px;">1000 🎮</div>
+                        <div style="font-size: 14px; opacity: 0.8;">₽350</div>
+                    </div>
+                    <div onclick="selectExchange(this, 5000, 1500)" style="padding: 20px; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 16px; text-align: center; cursor: pointer; border: 2px solid transparent;">
+                        <div style="font-size: 24px; font-weight: 700; margin-bottom: 5px;">5000 🎮</div>
+                        <div style="font-size: 14px; opacity: 0.8;">₽1500</div>
+                    </div>
+                </div>
+                <button onclick="confirmExchange()" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 25px; font-size: 15px; font-weight: 600; cursor: pointer;">✅ Подтвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Fullscreen Modal -->
+    <div id="notificationsModal" onclick="closeNotificationsModal(event)" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #667eea, #764ba2); z-index: 10000; overflow-y: auto;">
+        <div style="min-height: 100vh; padding: 20px;">
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 20px; background: rgba(255,255,255,0.15); border-radius: 20px; backdrop-filter: blur(10px);">
+                <h2 style="font-size: 28px; color: white; margin: 0;">🔔 Уведомления</h2>
+                <button onclick="closeNotificationsModal()" style="width: 45px; height: 45px; border-radius: 50%; border: none; background: rgba(255,255,255,0.2); color: white; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">×</button>
+            </div>
+            
+            <!-- Notifications List -->
+            <div id="notificationsListModal" style="display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto;">
+                <div onclick="markNotificationRead(this)" style="background: white; border-radius: 20px; padding: 25px; display: flex; align-items: flex-start; gap: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); cursor: pointer; border-left: 5px solid #667eea; transform: translateX(0); transition: all 0.3s;">
+                    <div style="width: 55px; height: 55px; border-radius: 16px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">🏆</div>
+                    <div style="flex: 1;">
+                        <h4 style="font-size: 18px; color: #333; margin-bottom: 8px; font-weight: 600;">Новое достижение!</h4>
+                        <p style="font-size: 15px; color: #666; line-height: 1.6;">Вы получили достижение "Первые шаги" за прохождение первой игры!</p>
+                        <span style="display: inline-block; margin-top: 10px; padding: 5px 15px; background: #f3e8ff; color: #667eea; border-radius: 20px; font-size: 12px; font-weight: 600;">Новое</span>
+                    </div>
+                    <div style="font-size: 14px; color: #999; flex-shrink: 0; white-space: nowrap;">2 часа назад</div>
+                </div>
+                <div onclick="markNotificationRead(this)" style="background: white; border-radius: 20px; padding: 25px; display: flex; align-items: flex-start; gap: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); cursor: pointer; border-left: 5px solid #667eea; transform: translateX(0); transition: all 0.3s;">
+                    <div style="width: 55px; height: 55px; border-radius: 16px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">📜</div>
+                    <div style="flex: 1;">
+                        <h4 style="font-size: 18px; color: #333; margin-bottom: 8px; font-weight: 600;">Сертификат получен</h4>
+                        <p style="font-size: 15px; color: #666; line-height: 1.6;">Поздравляем! Вы получили сертификат за прохождение теста.</p>
+                        <span style="display: inline-block; margin-top: 10px; padding: 5px 15px; background: #f3e8ff; color: #667eea; border-radius: 20px; font-size: 12px; font-weight: 600;">Новое</span>
+                    </div>
+                    <div style="font-size: 14px; color: #999; flex-shrink: 0; white-space: nowrap;">5 часов назад</div>
+                </div>
+                <div onclick="markNotificationRead(this)" style="background: rgba(255,255,255,0.95); border-radius: 20px; padding: 25px; display: flex; align-items: flex-start; gap: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); cursor: pointer; transform: translateX(0); transition: all 0.3s;">
+                    <div style="width: 55px; height: 55px; border-radius: 16px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">💎</div>
+                    <div style="flex: 1;">
+                        <h4 style="font-size: 18px; color: #333; margin-bottom: 8px; font-weight: 600;">Бонус за вход</h4>
+                        <p style="font-size: 15px; color: #666; line-height: 1.6;">Вы получили 10 голосов за ежедневный вход в систему!</p>
+                    </div>
+                    <div style="font-size: 14px; color: #999; flex-shrink: 0; white-space: nowrap;">Вчера</div>
+                </div>
+                <div onclick="markNotificationRead(this)" style="background: rgba(255,255,255,0.95); border-radius: 20px; padding: 25px; display: flex; align-items: flex-start; gap: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); cursor: pointer; transform: translateX(0); transition: all 0.3s;">
+                    <div style="width: 55px; height: 55px; border-radius: 16px; background: linear-gradient(135deg, #69F0AE, #00B894); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">⭐</div>
+                    <div style="flex: 1;">
+                        <h4 style="font-size: 18px; color: #333; margin-bottom: 8px; font-weight: 600;">Новый уровень!</h4>
+                        <p style="font-size: 15px; color: #666; line-height: 1.6;">Вы достигли 5 уровня в игре "Цвета и формы"!</p>
+                    </div>
+                    <div style="font-size: 14px; color: #999; flex-shrink: 0; white-space: nowrap;">2 дня назад</div>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+    <!-- Bot Chat Button -->
+    <button type="button" class="bot-fab" id="botFab" aria-label="Bot">🤖</button>
+
+    <!-- Bot Chat Modal -->
+    <div id="botChatModal" class="hidden fixed inset-0 z-[3000]">
+        <div id="botChatBackdrop" class="absolute inset-0 bg-black/60"></div>
+        <div class="relative w-full h-full tail-container">
+            <div class="flex flex-col h-screen">
+                <header class="header-gradient px-6 py-5 flex items-center justify-between border-b border-zinc-800 shadow-2xl">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-4xl shadow-xl animate-pulse">🤖</div>
+                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-zinc-950 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold tracking-tighter text-yellow-300">AI Поддержка</h1>
+                            <p class="text-xs text-green-400 flex items-center gap-1">
+                                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                онлайн • отвечает мгновенно
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="clearChat()" class="flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 transition-all rounded-2xl text-sm font-medium">
+                            <span class="text-lg">🗑️</span>Очистить чат
+                        </button>
+                        <button type="button" id="botChatClose" class="w-11 h-11 flex items-center justify-center text-2xl bg-zinc-900 hover:bg-zinc-800 rounded-2xl border border-zinc-800">✕</button>
+                        <div class="text-xs px-4 py-2 bg-zinc-900 rounded-3xl border border-yellow-400/30 text-yellow-300 font-medium">v1.0</div>
+                    </div>
+                </header>
+                <div id="chat" class="chat-container flex-1 overflow-y-auto p-8 space-y-8 bg-[radial-gradient(at_bottom_right,#18181b_0%,transparent_70%)] relative"></div>
+                <div class="bg-zinc-900 border-t border-zinc-700 p-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div id="attachments-preview" class="flex gap-3 mb-3 flex-wrap"></div>
+                        <div class="flex items-center gap-3 bg-zinc-800 rounded-3xl px-3 py-2 shadow-2xl border border-zinc-700">
+                            <button type="button" onclick="triggerFileInput()" class="w-11 h-11 flex items-center justify-center text-3xl hover:bg-zinc-700 transition-all rounded-2xl active:scale-90">📎</button>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*,audio/*,application/pdf,.doc,.docx,.txt" class="hidden">
+                            <input id="message-input" type="text" placeholder="Напишите сообщение..." class="flex-1 bg-transparent outline-none text-lg placeholder-zinc-500 py-4 px-4 font-medium" onkeydown="if(event.key === 'Enter') sendTextMessage()">
+                            <button type="button" onclick="sendTextMessage()" class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-2xl flex items-center justify-center text-3xl shadow-xl active:scale-95 transition-all">➤</button>
+                        </div>
+                        <p class="text-center text-[10px] text-zinc-500 mt-4 tracking-widest">Поддерживает: фото • музыка • видео • PDF • любые файлы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
