@@ -1,0 +1,350 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+/* Навигация */
+.navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav-menu a:hover {
+    opacity: 0.8;
+}
+
+.account-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.mobile-menu-btn svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* Мобильное меню */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    z-index: 999;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s;
+}
+
+.mobile-menu a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.mobile-menu a:last-child {
+    border-bottom: none;
+    color: #ff6b6b;
+}
+
+/* Контент */
+.main-content {
+    margin-top: 80px;
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 18px;
+}
+
+/* Табы */
+.ranking-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 12px 30px;
+    border: 2px solid #764ba2;
+    background: white;
+    color: #764ba2;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Лидерборд */
+.leaderboard {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.leaderboard-header {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px 100px;
+    padding: 20px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: bold;
+}
+
+.leaderboard-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 100px 100px;
+    padding: 20px 30px;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+    transition: background 0.3s;
+}
+
+.leaderboard-row:hover {
+    background: #f9f9f9;
+}
+
+.leaderboard-row.current-user {
+    background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%);
+    border-left: 4px solid #764ba2;
+}
+
+.rank {
+    font-size: 24px;
+    font-weight: bold;
+    color: #764ba2;
+}
+
+.rank.top3 {
+    color: #ffc107;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.user-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.user-level {
+    font-size: 12px;
+    color: #666;
+}
+
+.score {
+    font-size: 20px;
+    font-weight: bold;
+    color: #764ba2;
+}
+
+.stars {
+    color: #ffc107;
+    font-size: 18px;
+}
+
+/* Награды топ 3 */
+.top3-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.top3-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.top3-card.first {
+    border-top: 5px solid #ffc107;
+    transform: scale(1.05);
+}
+
+.top3-card.second {
+    border-top: 5px solid #c0c0c0;
+}
+
+.top3-card.third {
+    border-top: 5px solid #cd7f32;
+}
+
+.medal {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.top3-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.top3-score {
+    font-size: 24px;
+    color: #764ba2;
+    font-weight: bold;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .leaderboard-header,
+    .leaderboard-row {
+        grid-template-columns: 60px 1fr 80px;
+    }
+
+    .leaderboard-header span:last-child,
+    .leaderboard-row .stars {
+        display: none;
+    }
+
+    .top3-section {
+        grid-template-columns: 1fr;
+    }
+
+    .top3-card.first {
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .leaderboard-header,
+    .leaderboard-row {
+        padding: 15px 20px;
+        grid-template-columns: 50px 1fr 70px;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .rank {
+        font-size: 18px;
+    }
+
+    .score {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,329 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* Навигация */
+.navbar {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.account-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.mobile-menu-btn svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* Мобильное меню */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    z-index: 999;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.mobile-menu.active {
+    display: block;
+}
+
+.mobile-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s;
+}
+
+.mobile-menu a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.mobile-menu a:last-child {
+    border-bottom: none;
+    color: #ff6b6b;
+}
+
+/* Контент */
+.main-content {
+    margin-top: 80px;
+    padding: 40px 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.page-header h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.collection-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    background: rgba(255,255,255,0.2);
+    padding: 20px 40px;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+}
+
+.stat-box h3 {
+    font-size: 36px;
+    margin-bottom: 5px;
+}
+
+.stat-box p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Сетка карт */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+    position: relative;
+}
+
+.hero-card:hover {
+    transform: translateY(-10px) rotate(2deg);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.hero-card.locked {
+    opacity: 0.7;
+    filter: grayscale(0.8);
+}
+
+.hero-card.locked:hover {
+    transform: translateY(-5px);
+    filter: grayscale(0.6);
+}
+
+.card-header {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    position: relative;
+}
+
+.hero-card:nth-child(1) .card-header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.hero-card:nth-child(2) .card-header { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.hero-card:nth-child(3) .card-header { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.hero-card:nth-child(4) .card-header { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.hero-card:nth-child(5) .card-header { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+.hero-card:nth-child(6) .card-header { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
+.hero-card:nth-child(7) .card-header { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+.hero-card:nth-child(8) .card-header { background: linear-gradient(135deg, #fddb92 0%, #d1fdff 100%); }
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card-body p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.card-rarity {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.rarity-legendary { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #333; }
+.rarity-epic { background: linear-gradient(135deg, #a855f7, #6366f1); color: white; }
+.rarity-rare { background: linear-gradient(135deg, #3b82f6, #06b6d4); color: white; }
+.rarity-common { background: #e5e7eb; color: #666; }
+
+.lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+}
+
+/* Прогресс коллекции */
+.collection-progress {
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+    color: white;
+}
+
+.collection-progress h2 {
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ffd700, #ffaa00);
+    border-radius: 10px;
+    transition: width 0.5s;
+}
+
+.reward-text {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 28px;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .collection-stats {
+        gap: 20px;
+    }
+
+    .stat-box {
+        padding: 15px 25px;
+    }
+
+    .stat-box h3 {
+        font-size: 28px;
+    }
+}

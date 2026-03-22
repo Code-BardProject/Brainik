@@ -1,0 +1,308 @@
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --accent: 234 179 8;
+        }
+        
+        .bot-fab {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            z-index: 2500;
+            font-size: 28px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+        }
+        
+        .bot-fab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.30);
+            filter: brightness(1.05);
+        }
+        
+.bot-fab:active {
+    transform: translateY(0);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+        
+.bot-fab:focus {
+    outline: none;
+}
+
+.bot-fab:focus-visible {
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.35), 0 14px 35px rgba(0, 0, 0, 0.25);
+}
+        
+@media (max-width: 480px) {
+    .bot-fab {
+        right: 16px;
+        bottom: 16px;
+        width: 56px;
+        height: 56px;
+        font-size: 26px;
+    }
+}
+
+.tail-container {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #ffffff;
+}
+
+#botChatModal .tail-container {
+    background: #000000;
+}
+        
+.chat-container {
+    scrollbar-width: thin;
+    scrollbar-color: #eab308 #27272a;
+}
+
+#botChatModal .chat-container {
+    background: #000000;
+}
+
+.botchat-close-btn {
+    color: #ffffff !important;
+}
+
+.botchat-inputbar {
+    background: rgba(24, 24, 27, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.botchat-inputbar #message-input {
+    color: #ffffff !important;
+}
+
+.botchat-inputbar #message-input::placeholder {
+    color: rgba(255, 255, 255, 0.50) !important;
+}
+
+.botchat-attach-btn {
+    color: #ffffff !important;
+}
+
+.botchat-send-btn {
+    border-radius: 16px !important;
+    color: #0b0b0f !important;
+    font-weight: 800;
+}
+
+.botchat-send-btn:hover {
+    filter: brightness(1.05);
+}
+        
+.message-bubble {
+    animation: bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    position: relative;
+}
+        
+@keyframes bubblePop {
+    0% { opacity: 0; transform: scale(0.6) translateY(30px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+        
+.user-bubble {
+    background: linear-gradient(135deg, #eab308, #f59e0b);
+    box-shadow: 0 10px 30px -10px rgb(234 179 8);
+}
+        
+.bot-bubble {
+    background: linear-gradient(135deg, #27272a, #3f3f46);
+    box-shadow: 0 10px 30px -10px rgb(63 63 70);
+}
+        
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+        
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #a1a1aa;
+    border-radius: 50%;
+    animation: typingBounce 1.2s infinite;
+}
+        
+.typing-dot:nth-child(2) { animation-delay: 150ms; }
+.typing-dot:nth-child(3) { animation-delay: 300ms; }
+        
+@keyframes typingBounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+}
+        
+.file-preview {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.file-preview:hover {
+    transform: scale(1.03);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+}
+
+.header-gradient {
+    background: linear-gradient(90deg, #18181b, #27272a);
+    padding: 20px 24px;
+}
+
+.header-gradient h1 {
+    font-size: 24px;
+}
+
+.header-gradient p {
+    font-size: 14px;
+}
+
+.botchat-desktop-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+        
+
+.botchat-mobile-controls {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.botchat-menu-btn {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1;
+    border-radius: 16px;
+    background: #18181b;
+    border: 1px solid #27272a;
+    color: #e4e4e7;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.botchat-menu-btn:active {
+    transform: scale(0.96);
+}
+
+.botchat-menu-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(280px, calc(100vw - 24px));
+    background: #0b0b0f;
+    border: 1px solid rgba(234, 179, 8, 0.22);
+    border-radius: 18px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    padding: 10px;
+    z-index: 50;
+}
+
+.botchat-menu-panel.hidden {
+    display: none;
+}
+
+.botchat-menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 12px;
+    border-radius: 14px;
+    background: rgba(39, 39, 42, 0.55);
+    color: #f4f4f5;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    transition: background 0.15s ease;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.botchat-menu-item:hover {
+    background: rgba(39, 39, 42, 0.85);
+}
+
+.botchat-menu-meta {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(24, 24, 27, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #eab308;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+    .botchat-desktop-controls {
+        display: none !important;
+    }
+
+    .botchat-mobile-controls {
+        display: inline-flex;
+    }
+
+    .chat-container {
+        padding: 18px !important;
+    }
+
+    .botchat-inputbar {
+        border-radius: 20px !important;
+        padding: 6px 8px !important;
+        gap: 8px !important;
+    }
+
+    .botchat-attach-btn {
+        width: 42px !important;
+        height: 42px !important;
+        font-size: 22px !important;
+        border-radius: 14px !important;
+    }
+
+    .botchat-send-btn {
+        width: 46px !important;
+        height: 46px !important;
+        font-size: 22px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-gradient {
+        padding: 14px 16px !important;
+    }
+
+    .header-gradient h1 {
+        font-size: 18px !important;
+    }
+
+    .header-gradient p {
+        font-size: 10px !important;
+    }
+
+    #message-input {
+        font-size: 15px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .bot-bubble,
+    .user-bubble {
+        padding: 14px 16px !important;
+    }
+}
